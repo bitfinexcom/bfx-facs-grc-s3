@@ -1,0 +1,7 @@
+{
+  "facility": {
+    "bucket": "bfx-s3-ex",
+    "acl": "public-read",
+    "contentDisposition": "attachment"
+  }
+}
