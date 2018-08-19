@@ -10,6 +10,8 @@ class S3Grc extends Base {
     this._hasConf = true
 
     this.init()
+
+    this.uploadS3 = this.uploadS3.bind(this)
   }
 
   base64MimeType (encoded) {
@@ -54,7 +56,7 @@ class S3Grc extends Base {
 
     const parsedData = this.parseBase64DataForS3(data, filename, key)
 
-    this.ctx.grc_bfx.req(
+    this.caller.grc_bfx.req(
       'rest:ext:s3',
       'uploadPublic',
       parsedData,
