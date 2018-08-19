@@ -47,7 +47,7 @@ class S3Grc extends Base {
     ]
   }
 
-  uploadS3 (cb, data, filename, key, uid) {
+  uploadS3 (data, filename, key, uid, cb) {
     if (!this.base64DataCheck(data)) {
       return cb(new Error('FACS_GRC_S3_ERROR_UPLOADED_DOCS_TYPE'))
     }
