@@ -32,7 +32,7 @@ class S3Grc extends Base {
     return this.base64MimeType(encoded) && this.base64ParseData(encoded)
   }
 
-  parseBase64DataForS3 (encoded, filename, key) {
+  parseBase64DataForS3 (encoded, filename, key, base64 = true) {
     const s3 = this.conf
     const header = {
       contentType: this.base64MimeType(encoded),
@@ -44,17 +44,23 @@ class S3Grc extends Base {
       header.contentDisposition = dispo
     }
     if (key) header.key = key
+
+    let buffer = encoded
+    if (base64) buffer = Buffer.from(this.base64ParseData(encoded), 'base64')
+
     return [
-      Buffer.from(this.base64ParseData(encoded), 'base64').toString('hex'), header
+      buffer.toString('hex'), header
     ]
   }
 
-  uploadS3 (data, filename, key, uid, cb) {
-    if (!this.base64DataCheck(data)) {
-      return cb(new Error('FACS_GRC_S3_ERROR_UPLOADED_DOCS_TYPE'))
-    }
+  uploadS3 (data, filename, key, cb) {
+    let parsedData = data
 
-    const parsedData = this.parseBase64DataForS3(data, filename, key)
+    if (this.base64DataCheck(data)) {
+      parsedData = this.parseBase64DataForS3(data, filename, key)
+    } else {
+      parsedData = this.parseBase64DataForS3(data, filename, key, false)
+    }
 
     this.caller.grc_bfx.req(
       'rest:ext:s3',
