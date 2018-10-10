@@ -1,0 +1,7 @@
+{
+  "s3": {
+    "bucket": "",
+    "acl": "public-read",
+    "contentDisposition": "attachment"
+  }
+}

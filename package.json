@@ -1,0 +1,56 @@
+{
+  "name": "bfx-facs-grc-s3",
+  "version": "0.0.1",
+  "private": false,
+  "description": "Bitfinex Grenache s3 Facility",
+  "author": {
+    "name": "face",
+    "email": "rama@bitfinex.com"
+  },
+  "keywords": [
+    "bitfinex",
+    "s3",
+    "grenache"
+  ],
+  "dependencies": {
+    "async": "^2.6.0",
+    "bfx-facs-base": "git+https://github.com/bitfinexcom/bfx-facs-base.git",
+    "grenache-nodejs-http": "^0.7.6",
+    "lodash": "^4.17.10"
+  },
+  "scripts": {
+    "test": "npm run lint && npm run unit",
+    "unit": "mocha",
+    "lint": "standard",
+    "lintFix": "standard --fix"
+  },
+  "engine": {
+    "node": ">=8.0"
+  },
+  "main": "index.js",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bitfinexcom/bfx-facs-auth-google.git"
+  },
+  "homepage": "https://github.com/bitfinexcom/bfx-facs-auth-google",
+  "maintainers": [
+    {
+      "name": "face",
+      "email": "<rama@bitfinex.com>"
+    },
+    {
+      "name": "brentkirkland",
+      "email": "<brent@bitfinex.com>"
+    },
+    {
+      "name": "prdn",
+      "email": "paolo@bitfinex.com"
+    }
+  ],
+  "devDependencies": {
+    "grenache-grape": "^0.9.8",
+    "mocha": "^5.2.0",
+    "standard": "^11.0.1"
+  }
+}
