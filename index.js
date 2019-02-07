@@ -69,6 +69,33 @@ class S3Grc extends Base {
       { timeout: 10000 },
       cb)
   }
+
+  deleteFromS3 (files, cb) {
+    if (!Array.isArray(files)) return cb(new Error('ERR_API_NO_files_ARR'))
+    if (!files.length) return cb(new Error('ERR_API_EMPTY_files_ARR'))
+
+    const deleteFiles = files.map(
+      file => file && file.key && { key: file.key }
+    )
+    if (
+      deleteFiles.some(file => !file)
+    ) return cb(new Error('ERR_API_NO_KEY_IN_FILE'))
+
+    const s3 = this.conf
+    const header = {
+      acl: s3.acl,
+      bucket: s3.bucket
+    }
+
+    const data = [deleteFiles, header]
+
+    this.caller.grc_bfx.req(
+      'rest:ext:s3',
+      'deleteFiles',
+      data,
+      { timeout: 10000 },
+      cb)
+  }
 }
 
 module.exports = S3Grc

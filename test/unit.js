@@ -70,4 +70,28 @@ describe('unit testing s3 helpers', () => {
     const parse = grcS3.parseBase64DataForS3(data, 'example.png', 'someKey')
     assert.deepStrictEqual(parse, res)
   })
+
+  it('Should throw an error if files is not an array', (done) => {
+    const files = 'Text'
+    grcS3.deleteFromS3(files, (err, data) => {
+      assert.deepStrictEqual('ERR_API_NO_files_ARR', err.message)
+      done()
+    })
+  })
+
+  it('Should throw an error if files is empty', (done) => {
+    const files = [ ]
+    grcS3.deleteFromS3(files, (err, data) => {
+      assert.deepStrictEqual('ERR_API_EMPTY_files_ARR', err.message)
+      done()
+    })
+  })
+
+  it('Should throw an error if some file has no key ', (done) => {
+    const files = [ { key: 'id' }, { } ]
+    grcS3.deleteFromS3(files, (err, data) => {
+      assert.deepStrictEqual('ERR_API_NO_KEY_IN_FILE', err.message)
+      done()
+    })
+  })
 })
