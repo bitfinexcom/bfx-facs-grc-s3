@@ -70,7 +70,7 @@ class S3Grc extends Base {
       cb)
   }
 
-  getDowloadUrl (filename, key, cb) {
+  getDownloadUrl (filename, key, cb) {
     const responseDisposition = `attachment; filename=${filename}`
     const signedUrlExpireTime = 120
 
