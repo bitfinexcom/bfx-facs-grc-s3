@@ -70,6 +70,22 @@ class S3Grc extends Base {
       cb)
   }
 
+  getDownloadUrl (filename, key, cb) {
+    const responseDisposition = `attachment; filename=${filename}`
+    const signedUrlExpireTime = 120
+
+    const optsGetPresignedUrl = [{
+      key, signedUrlExpireTime, responseDisposition
+    }]
+
+    this.caller.grc_bfx.req(
+      'rest:ext:s3',
+      'getPresignedUrl',
+      optsGetPresignedUrl,
+      { timeout: 10000 },
+      cb)
+  }
+
   deleteFromS3 (files, cb) {
     if (!Array.isArray(files)) return cb(new Error('ERR_API_NO_files_ARR'))
     if (!files.length) return cb(new Error('ERR_API_EMPTY_files_ARR'))
