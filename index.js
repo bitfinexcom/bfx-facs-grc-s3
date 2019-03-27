@@ -73,9 +73,11 @@ class S3Grc extends Base {
   getDownloadUrl (filename, key, cb) {
     const responseDisposition = `attachment; filename=${filename}`
     const signedUrlExpireTime = 120
+    const s3 = this.conf
+    const bucket = s3.bucket
 
     const optsGetPresignedUrl = [{
-      key, signedUrlExpireTime, responseDisposition
+      key, bucket, signedUrlExpireTime, responseDisposition
     }]
 
     this.caller.grc_bfx.req(
