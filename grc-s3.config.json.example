@@ -1,5 +1,6 @@
 {
   "s3": {
+    "worker": "rest:ext:s3",
     "bucket": "",
     "acl": "public-read",
     "contentDisposition": "attachment"

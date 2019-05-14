@@ -55,6 +55,8 @@ class S3Grc extends Base {
 
   uploadS3 (data, filename, key, cb) {
     let parsedData = data
+    const s3 = this.conf
+    const worker = s3.worker || 'rest:ext:s3'
 
     if (this.base64DataCheck(data)) {
       parsedData = this.parseBase64DataForS3(data, filename, key)
@@ -63,7 +65,7 @@ class S3Grc extends Base {
     }
 
     this.caller.grc_bfx.req(
-      'rest:ext:s3',
+      worker,
       'uploadPublic',
       parsedData,
       { timeout: 10000 },
@@ -75,13 +77,14 @@ class S3Grc extends Base {
     const signedUrlExpireTime = 120
     const s3 = this.conf
     const bucket = s3.bucket
+    const worker = s3.worker || 'rest:ext:s3'
 
     const optsGetPresignedUrl = [{
       key, bucket, signedUrlExpireTime, responseDisposition
     }]
 
     this.caller.grc_bfx.req(
-      'rest:ext:s3',
+      worker,
       'getPresignedUrl',
       optsGetPresignedUrl,
       { timeout: 10000 },
@@ -100,6 +103,7 @@ class S3Grc extends Base {
     ) return cb(new Error('ERR_API_NO_KEY_IN_FILE'))
 
     const s3 = this.conf
+    const worker = s3.worker || 'rest:ext:s3'
     const header = {
       acl: s3.acl,
       bucket: s3.bucket
@@ -108,7 +112,7 @@ class S3Grc extends Base {
     const data = [deleteFiles, header]
 
     this.caller.grc_bfx.req(
-      'rest:ext:s3',
+      worker,
       'deleteFiles',
       data,
       { timeout: 10000 },
