@@ -40,7 +40,8 @@ class S3Grc extends Base {
       bucket: s3.bucket
     }
     if (filename) {
-      const dispo = `${s3.contentDisposition}; filename="${filename}"`
+      const asciiFileName = filename.replace(/[\u{0080}-\u{FFFF}]/gu, '')
+      const dispo = `${s3.contentDisposition}; filename="${asciiFileName}"`
       header.contentDisposition = dispo
     }
     if (key) header.key = key
@@ -73,7 +74,8 @@ class S3Grc extends Base {
   }
 
   getDownloadUrl (filename, key, cb) {
-    const responseDisposition = `attachment; filename=${filename}`
+    const asciiFileName = filename.replace(/[\u{0080}-\u{FFFF}]/gu, '')
+    const responseDisposition = `attachment; filename=${asciiFileName}`
     const signedUrlExpireTime = 120
     const s3 = this.conf
     const bucket = s3.bucket
