@@ -1,6 +1,7 @@
 'use strict'
 
 const Base = require('bfx-facs-base')
+const { getAsciiFileName } = require('./helpers')
 
 class S3Grc extends Base {
   constructor (caller, opts, ctx) {
@@ -39,11 +40,14 @@ class S3Grc extends Base {
       acl: s3.acl,
       bucket: s3.bucket
     }
-    if (filename) {
-      const asciiFileName = filename.replace(/[\u{0080}-\u{FFFF}]/gu, '')
+
+    const asciiFileName = getAsciiFileName(filename)
+
+    if (asciiFileName) {
       const dispo = `${s3.contentDisposition}; filename="${asciiFileName}"`
       header.contentDisposition = dispo
     }
+
     if (key) header.key = key
 
     let buffer = encoded
@@ -74,8 +78,11 @@ class S3Grc extends Base {
   }
 
   getDownloadUrl (filename, key, cb) {
-    const asciiFileName = filename.replace(/[\u{0080}-\u{FFFF}]/gu, '')
-    const responseDisposition = `attachment; filename=${asciiFileName}`
+    const asciiFileName = getAsciiFileName(filename)
+    const responseDisposition = (asciiFileName)
+      ? `attachment; filename=${asciiFileName}`
+      : 'attachment'
+
     const signedUrlExpireTime = 120
     const s3 = this.conf
     const bucket = s3.bucket
