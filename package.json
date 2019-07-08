@@ -1,6 +1,6 @@
 {
   "name": "bfx-facs-grc-s3",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": false,
   "description": "Bitfinex Grenache s3 Facility",
   "author": {
@@ -40,8 +40,8 @@
       "email": "<rama@bitfinex.com>"
     },
     {
-      "name": "brentkirkland",
-      "email": "<brent@bitfinex.com>"
+      "name": "Ezequiel Wernicke",
+      "email": "<ezequiel.wernicke@bitfinex.com>"
     },
     {
       "name": "prdn",
