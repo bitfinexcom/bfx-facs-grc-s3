@@ -5,6 +5,7 @@
 const assert = require('assert')
 
 const S3Grc = require('../')
+const { getAsciiFileName } = require('../helpers')
 
 const ctx = {root: './test'}
 const caller = {ctx: ctx}
@@ -93,5 +94,46 @@ describe('unit testing s3 helpers', () => {
       assert.deepStrictEqual('ERR_API_NO_KEY_IN_FILE', err.message)
       done()
     })
+  })
+})
+
+describe('unit testing helpers.js', () => {
+  it('getAsciiFileName, Should return the same filename if it dont include no ASCII characters', () => {
+    const filename = 'some name.jpg'
+    const parseFilename = getAsciiFileName(filename)
+    assert.deepStrictEqual(filename, parseFilename)
+  })
+
+  it('getAsciiFileName, Should return the a filename without ASCII characters if they are included', () => {
+    const filenames = [ 'somПдтвe name.jpg', 'some na賣開始時進me.jpg' ]
+    const noAsciiFilename = 'some name.jpg'
+    for (const filename of filenames) {
+      const parseFilename = getAsciiFileName(filename)
+      assert.deepStrictEqual(noAsciiFilename, parseFilename)
+    }
+  })
+
+  it('getAsciiFileName, Should return “file.{extension}” if all filename is composed by  ASCII characters', () => {
+    const filename = '賣開始時進.jpg'
+    const parseFilename = getAsciiFileName(filename)
+    assert.deepStrictEqual('file.jpg', parseFilename)
+  })
+
+  it('getAsciiFileName, Should return the same filename if it dont include no ASCII characters', () => {
+    const filename = 'some name.賣pg'
+    const parseFilename = getAsciiFileName(filename)
+    assert.deepStrictEqual(false, parseFilename)
+  })
+
+  it('getAsciiFileName, Should return false if no filename', () => {
+    const filename = null
+    const parseFilename = getAsciiFileName(filename)
+    assert.deepStrictEqual(false, parseFilename)
+  })
+
+  it('getAsciiFileName, Should return false if no extension', () => {
+    const filename = 'noextension'
+    const parseFilename = getAsciiFileName(filename)
+    assert.deepStrictEqual(false, parseFilename)
   })
 })
