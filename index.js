@@ -59,7 +59,7 @@ class S3Grc extends Base {
     ]
   }
 
-  uploadS3 (data, filename, key, cb) {
+  uploadS3 (data, filename, key, cb = null) {
     let parsedData = data
     const s3 = this.conf
     const worker = s3.worker || 'rest:ext:s3'
@@ -78,7 +78,7 @@ class S3Grc extends Base {
       cb)
   }
 
-  getDownloadUrl (filename, key, cb) {
+  getDownloadUrl (filename, key, cb = null) {
     const asciiFileName = getAsciiFileName(filename)
     const responseDisposition = (asciiFileName)
       ? `attachment; filename=${asciiFileName}`
@@ -101,7 +101,7 @@ class S3Grc extends Base {
       cb)
   }
 
-  deleteFromS3 (files, cb) {
+  deleteFromS3 (files, cb = null) {
     if (!Array.isArray(files)) {
       const err = new Error('ERR_API_NO_files_ARR')
       return cb ? cb(err) : Promise.reject(err)
