@@ -13,6 +13,8 @@ class S3Grc extends Base {
     this.init()
 
     this.uploadS3 = this.uploadS3.bind(this)
+    this.getDownloadUrl = this.getDownloadUrl.bind(this)
+    this.deleteFromS3 = this.deleteFromS3.bind(this)
   }
 
   base64MimeType (encoded) {
@@ -44,8 +46,7 @@ class S3Grc extends Base {
     const asciiFileName = getAsciiFileName(filename)
 
     if (asciiFileName) {
-      const dispo = `${s3.contentDisposition}; filename="${asciiFileName}"`
-      header.contentDisposition = dispo
+      header.contentDisposition = `${s3.contentDisposition}; filename="${asciiFileName}"`
     }
 
     if (key) header.key = key
@@ -58,7 +59,7 @@ class S3Grc extends Base {
     ]
   }
 
-  uploadS3 (data, filename, key, cb) {
+  uploadS3 (data, filename, key, cb = null) {
     let parsedData = data
     const s3 = this.conf
     const worker = s3.worker || 'rest:ext:s3'
@@ -69,7 +70,7 @@ class S3Grc extends Base {
       parsedData = this.parseBase64DataForS3(data, filename, key, false)
     }
 
-    this.caller.grc_bfx.req(
+    return this.caller.grc_bfx.req(
       worker,
       'uploadPublic',
       parsedData,
@@ -77,7 +78,7 @@ class S3Grc extends Base {
       cb)
   }
 
-  getDownloadUrl (filename, key, cb) {
+  getDownloadUrl (filename, key, cb = null) {
     const asciiFileName = getAsciiFileName(filename)
     const responseDisposition = (asciiFileName)
       ? `attachment; filename=${asciiFileName}`
@@ -92,7 +93,7 @@ class S3Grc extends Base {
       key, bucket, signedUrlExpireTime, responseDisposition
     }]
 
-    this.caller.grc_bfx.req(
+    return this.caller.grc_bfx.req(
       worker,
       'getPresignedUrl',
       optsGetPresignedUrl,
@@ -100,16 +101,23 @@ class S3Grc extends Base {
       cb)
   }
 
-  deleteFromS3 (files, cb) {
-    if (!Array.isArray(files)) return cb(new Error('ERR_API_NO_files_ARR'))
-    if (!files.length) return cb(new Error('ERR_API_EMPTY_files_ARR'))
+  deleteFromS3 (files, cb = null) {
+    if (!Array.isArray(files)) {
+      const err = new Error('ERR_API_NO_files_ARR')
+      return cb ? cb(err) : Promise.reject(err)
+    }
+    if (!files.length) {
+      const err = new Error('ERR_API_EMPTY_files_ARR')
+      return cb ? cb(err) : Promise.reject(err)
+    }
 
     const deleteFiles = files.map(
       file => file && file.key && { key: file.key }
     )
-    if (
-      deleteFiles.some(file => !file)
-    ) return cb(new Error('ERR_API_NO_KEY_IN_FILE'))
+    if (deleteFiles.some(file => !file)) {
+      const err = new Error('ERR_API_NO_KEY_IN_FILE')
+      return cb ? cb(err) : Promise.reject(err)
+    }
 
     const s3 = this.conf
     const worker = s3.worker || 'rest:ext:s3'
@@ -120,7 +128,7 @@ class S3Grc extends Base {
 
     const data = [deleteFiles, header]
 
-    this.caller.grc_bfx.req(
+    return this.caller.grc_bfx.req(
       worker,
       'deleteFiles',
       data,
