@@ -50,7 +50,7 @@
   ],
   "devDependencies": {
     "grenache-grape": "^0.9.8",
-    "mocha": "^5.2.0",
+    "mocha": "^10.2.0",
     "standard": "^11.0.1"
   }
 }
