@@ -81,7 +81,7 @@ class S3Grc extends Base {
   /**
    * @param {string} filename
    * @param {string} key
-   * @param {object} [opts]
+   * @param {object|function|null} [opts]
    * @param {string} [opts.bucketName]
    * @param {function} [cb]
    * @returns {Promise|void}
