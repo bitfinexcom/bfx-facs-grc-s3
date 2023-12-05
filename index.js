@@ -78,7 +78,20 @@ class S3Grc extends Base {
       cb)
   }
 
-  getDownloadUrl (filename, key, cb = null) {
+  /**
+   * @param {string} filename
+   * @param {string} key
+   * @param {object|function|null} [opts]
+   * @param {string} [opts.bucketName]
+   * @param {function} [cb]
+   * @returns {Promise|void}
+   */
+  getDownloadUrl (filename, key, opts = null, cb = null) {
+    if (typeof opts === 'function') {
+      cb = opts
+      opts = null
+    }
+
     const asciiFileName = getAsciiFileName(filename)
     const responseDisposition = (asciiFileName)
       ? `attachment; filename=${asciiFileName}`
@@ -86,7 +99,7 @@ class S3Grc extends Base {
 
     const signedUrlExpireTime = 120
     const s3 = this.conf
-    const bucket = s3.bucket
+    const bucket = (opts && opts.bucketName) || s3.bucket
     const worker = s3.worker || 'rest:ext:s3'
 
     const optsGetPresignedUrl = [{
