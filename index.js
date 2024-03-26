@@ -14,6 +14,7 @@ class S3Grc extends Base {
 
     this.uploadS3 = this.uploadS3.bind(this)
     this.getDownloadUrl = this.getDownloadUrl.bind(this)
+    this.getInlineUrl = this.getInlineUrl.bind(this)
     this.deleteFromS3 = this.deleteFromS3.bind(this)
   }
 
@@ -87,16 +88,34 @@ class S3Grc extends Base {
    * @returns {Promise|void}
    */
   getDownloadUrl (filename, key, opts = null, cb = null) {
-    if (typeof opts === 'function') {
-      cb = opts
-      opts = null
-    }
-
     const asciiFileName = getAsciiFileName(filename)
     const responseDisposition = (asciiFileName)
       ? `attachment; filename=${asciiFileName}`
       : 'attachment'
+    return this._getPresignedUrl(responseDisposition, key, opts, cb)
+  }
 
+  /**
+   * @param {string} filename
+   * @param {string} key
+   * @param {object|function|null} [opts]
+   * @param {string} [opts.bucketName]
+   * @param {function} [cb]
+   * @returns {Promise|void}
+   */
+  getInlineUrl (filename, key, opts = null, cb = null) {
+    const asciiFileName = getAsciiFileName(filename)
+    const responseDisposition = (asciiFileName)
+      ? `inline; filename=${asciiFileName}`
+      : 'inline'
+    return this._getPresignedUrl(responseDisposition, key, opts, cb)
+  }
+
+  _getPresignedUrl (responseDisposition, key, opts = null, cb = null) {
+    if (typeof opts === 'function') {
+      cb = opts
+      opts = null
+    }
     const signedUrlExpireTime = 120
     const s3 = this.conf
     const bucket = (opts && opts.bucketName) || s3.bucket
