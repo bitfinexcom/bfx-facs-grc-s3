@@ -24,7 +24,7 @@
     "lint": "standard",
     "lintFix": "standard --fix"
   },
-  "engine": {
+  "engines": {
     "node": ">=16"
   },
   "main": "index.js",
