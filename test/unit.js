@@ -8,7 +8,7 @@ const S3Grc = require('../')
 const { getAsciiFileName } = require('../helpers')
 
 const ctx = { root: './test' }
-const caller = { ctx: ctx }
+const caller = { ctx }
 const grcS3 = new S3Grc(caller, {}, ctx)
 
 describe('unit testing s3 helpers', () => {
