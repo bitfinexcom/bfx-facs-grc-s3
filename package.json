@@ -1,5 +1,5 @@
 {
-  "name": "bfx-facs-grc-s3",
+  "name": "@bitfinex/bfx-facs-grc-s3",
   "version": "1.1.0",
   "private": false,
   "description": "Bitfinex Grenache s3 Facility",
@@ -13,8 +13,8 @@
     "grenache"
   ],
   "dependencies": {
-    "async": "2.6.1",
-    "bfx-facs-base": "git+https://github.com/bitfinexcom/bfx-facs-base.git",
+    "@bitfinex/bfx-facs-base": "git+https://github.com/bitfinexcom/bfx-facs-base.git",
+    "async": "2.6.4",
     "grenache-nodejs-http": "1.0.1"
   },
   "scripts": {
