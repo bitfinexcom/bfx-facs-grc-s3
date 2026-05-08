@@ -15,7 +15,7 @@
   "dependencies": {
     "@bitfinex/bfx-facs-base": "git+https://github.com/bitfinexcom/bfx-facs-base.git",
     "async": "2.6.4",
-    "grenache-nodejs-http": "1.0.1"
+    "grenache-nodejs-http": "1.0.2"
   },
   "scripts": {
     "test": "npm run lint && npm run unit",
