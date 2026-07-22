@@ -3,6 +3,7 @@
     "worker": "rest:ext:s3",
     "bucket": "",
     "acl": "public-read",
-    "contentDisposition": "attachment"
+    "contentDisposition": "attachment",
+    "signedUrlDefaultExpireTime": 120
   }
 }
