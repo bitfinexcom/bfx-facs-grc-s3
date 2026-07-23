@@ -8,7 +8,19 @@ const S3Grc = require('../')
 const { getAsciiFileName } = require('../helpers')
 
 const ctx = { root: './test' }
-const caller = { ctx }
+const caller = {
+  ctx,
+  grc_bfx: {
+    req: (worker, method, opts) => {
+      if (worker === 'rest:ext:s3') {
+        if (method === 'getPresignedUrl') {
+          const { signedUrlExpireTime } = opts[0]
+          return `https://amazonaws.com?X-Amz-Expires=${signedUrlExpireTime}`
+        }
+      }
+    }
+  }
+}
 const grcS3 = new S3Grc(caller, {}, ctx)
 
 describe('unit testing s3 helpers', () => {
@@ -138,5 +150,34 @@ describe('unit testing helpers.js', () => {
     const filename = 'noextension'
     const parseFilename = getAsciiFileName(filename)
     assert.deepStrictEqual(false, parseFilename)
+  })
+})
+
+describe('getDownloadUrl', () => {
+  it('signed url should return default expiry of 140', async () => {
+    const url = grcS3.getDownloadUrl('hello.txt', 'top-path')
+    const parsedUrl = new URL(url)
+    assert.deepEqual(parsedUrl.searchParams.get('X-Amz-Expires'), 140)
+  })
+  it('signed url should return passed expiry value', async () => {
+    const url = grcS3.getDownloadUrl('hello.txt', 'top-path', {
+      signedUrlExpireTime: 300
+    })
+    const parsedUrl = new URL(url)
+    assert.deepEqual(parsedUrl.searchParams.get('X-Amz-Expires'), 300)
+  })
+})
+describe('getInlineUrl', () => {
+  it('signed url should return default expiry of 140', async () => {
+    const url = grcS3.getInlineUrl('hello.txt', 'top-path')
+    const parsedUrl = new URL(url)
+    assert.deepEqual(parsedUrl.searchParams.get('X-Amz-Expires'), 140)
+  })
+  it('signed url should return passed expiry value', async () => {
+    const url = grcS3.getInlineUrl('hello.txt', 'top-path', {
+      signedUrlExpireTime: 300
+    })
+    const parsedUrl = new URL(url)
+    assert.deepEqual(parsedUrl.searchParams.get('X-Amz-Expires'), 300)
   })
 })

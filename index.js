@@ -119,10 +119,9 @@ class S3Grc extends Base {
       opts = null
     }
     const s3 = this.conf
-    const signedUrlExpireTime = 
+    const signedUrlExpireTime =
             (opts && opts.signedUrlExpireTime) || // take the passed value if valid
-            s3.signedUrlDefaultExpireTime || // take the config value if set
-            120 // if both the above values are invalid, take default value
+            s3.signedUrlDefaultExpireTime // take the config value
     const bucket = (opts && opts.bucketName) || s3.bucket
     const worker = s3.worker || 'rest:ext:s3'
 
