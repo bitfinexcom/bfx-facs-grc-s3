@@ -84,6 +84,7 @@ class S3Grc extends Base {
    * @param {string} key
    * @param {object|function|null} [opts]
    * @param {string} [opts.bucketName]
+   * @param {number|undefined} [opts.signedUrlExpireTime]
    * @param {function} [cb]
    * @returns {Promise|void}
    */
@@ -100,6 +101,7 @@ class S3Grc extends Base {
    * @param {string} key
    * @param {object|function|null} [opts]
    * @param {string} [opts.bucketName]
+   * @param {number|undefined} [opts.signedUrlExpireTime]
    * @param {function} [cb]
    * @returns {Promise|void}
    */
@@ -116,8 +118,10 @@ class S3Grc extends Base {
       cb = opts
       opts = null
     }
-    const signedUrlExpireTime = 120
     const s3 = this.conf
+    const signedUrlExpireTime =
+            (opts && opts.signedUrlExpireTime) || // take the passed value if valid
+            s3.signedUrlDefaultExpireTime // take the config value
     const bucket = (opts && opts.bucketName) || s3.bucket
     const worker = s3.worker || 'rest:ext:s3'
 
