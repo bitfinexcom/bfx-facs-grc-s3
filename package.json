@@ -13,7 +13,7 @@
     "grenache"
   ],
   "dependencies": {
-    "@bitfinex/bfx-facs-base": "git+https://github.com/bitfinexcom/bfx-facs-base.git"
+    "@bitfinex/bfx-facs-base": "git+https://github.com/bitfinexcom/bfx-facs-base.git#v2.0.0"
   },
   "scripts": {
     "test": "npm run lint && npm run unit",
