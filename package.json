@@ -13,9 +13,7 @@
     "grenache"
   ],
   "dependencies": {
-    "@bitfinex/bfx-facs-base": "git+https://github.com/bitfinexcom/bfx-facs-base.git",
-    "async": "2.6.4",
-    "grenache-nodejs-http": "1.0.2"
+    "@bitfinex/bfx-facs-base": "git+https://github.com/bitfinexcom/bfx-facs-base.git"
   },
   "scripts": {
     "test": "npm run lint && npm run unit",
@@ -48,7 +46,6 @@
     }
   ],
   "devDependencies": {
-    "grenache-grape": "^1.0.0",
     "mocha": "10.8.2",
     "standard": "17.1.2"
   }
