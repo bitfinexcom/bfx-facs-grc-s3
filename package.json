@@ -18,8 +18,8 @@
   "scripts": {
     "test": "npm run lint && npm run unit",
     "unit": "mocha",
-    "lint": "standard",
-    "lintFix": "standard --fix"
+    "lint": "bfx-lint-js .",
+    "lint:fix": "bfx-lint-js . --fix"
   },
   "engines": {
     "node": ">=22.0.0"
@@ -46,7 +46,7 @@
     }
   ],
   "devDependencies": {
-    "mocha": "10.8.2",
-    "standard": "17.1.2"
+    "@bitfinex/lint-js": "git+https://github.com/bitfinexcom/bfx-lint-js.git#v1.0.0",
+    "mocha": "10.8.2"
   }
 }
