@@ -39,14 +39,11 @@
     "test": "npm run lint && brittle-node 'test/*.test.js'"
   },
   "dependencies": {
-    "@bitfinex/bfx-facs-base": "git+https://github.com/bitfinexcom/bfx-facs-base.git#v2.0.0",
-    "async": "^3.2.6",
-    "grenache-nodejs-http": "2.0.0"
+    "@bitfinex/bfx-facs-base": "git+https://github.com/bitfinexcom/bfx-facs-base.git#v2.0.0"
   },
   "devDependencies": {
     "@bitfinex/lint-js": "^1.1.0",
-    "brittle": "^4.5.0",
-    "grenache-grape": "^1.0.0"
+    "brittle": "^4.5.0"
   },
   "engines": {
     "node": ">=22.0.0"
