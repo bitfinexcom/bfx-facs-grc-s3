@@ -20,7 +20,7 @@ class S3Grc extends Base {
 
   base64MimeType (encoded) {
     if (typeof encoded !== 'string') return null
-    const mime = encoded.match(/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).*,.*/)
+    const mime = encoded.match(/^data:([a-zA-Z0-9]+\/[a-zA-Z0-9.+-]+)[^,]*,/)
     if (mime && mime.length > 1) return mime[1]
     else return null
   }

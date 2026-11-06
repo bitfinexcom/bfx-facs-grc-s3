@@ -1,55 +1,51 @@
 {
   "name": "@bitfinex/bfx-facs-grc-s3",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "private": false,
   "description": "Bitfinex Grenache s3 Facility",
-  "author": {
-    "name": "face",
-    "email": "rama@bitfinex.com"
-  },
   "keywords": [
     "bitfinex",
     "s3",
     "grenache"
   ],
-  "dependencies": {
-    "@bitfinex/bfx-facs-base": "git+https://github.com/bitfinexcom/bfx-facs-base.git",
-    "async": "2.6.4",
-    "grenache-nodejs-http": "1.0.2"
-  },
-  "scripts": {
-    "test": "npm run lint && npm run unit",
-    "unit": "mocha",
-    "lint": "standard",
-    "lintFix": "standard --fix"
-  },
-  "engines": {
-    "node": ">=16"
-  },
-  "main": "index.js",
-  "license": "Apache-2.0",
+  "homepage": "https://github.com/bitfinexcom/bfx-facs-grc-s3",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bitfinexcom/bfx-facs-auth-google.git"
+    "url": "git+https://github.com/bitfinexcom/bfx-facs-grc-s3.git"
   },
-  "homepage": "https://github.com/bitfinexcom/bfx-facs-auth-google",
+  "license": "Apache-2.0",
+  "author": {
+    "name": "face",
+    "email": "rama@bitfinex.com"
+  },
   "maintainers": [
     {
       "name": "face",
-      "email": "<rama@bitfinex.com>"
+      "email": "rama@bitfinex.com"
     },
     {
       "name": "Ezequiel Wernicke",
-      "email": "<ezequiel.wernicke@bitfinex.com>"
+      "email": "ezequiel.wernicke@bitfinex.com"
     },
     {
       "name": "prdn",
       "email": "paolo@bitfinex.com"
     }
   ],
+  "main": "index.js",
+  "scripts": {
+    "lint": "bfx-lint-js",
+    "lint:fix": "bfx-lint-js --fix",
+    "test": "npm run lint && brittle-node 'test/*.test.js'"
+  },
+  "dependencies": {
+    "@bitfinex/bfx-facs-base": "git+https://github.com/bitfinexcom/bfx-facs-base.git#v2.0.0"
+  },
   "devDependencies": {
-    "grenache-grape": "^1.0.0",
-    "mocha": "10.8.2",
-    "standard": "17.1.2"
+    "@bitfinex/lint-js": "^1.1.0",
+    "brittle": "^4.5.0"
+  },
+  "engines": {
+    "node": ">=22.0.0"
   }
 }
