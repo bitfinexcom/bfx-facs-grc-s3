@@ -8,10 +8,10 @@
     "s3",
     "grenache"
   ],
-  "homepage": "https://github.com/bitfinexcom/bfx-facs-auth-google",
+  "homepage": "https://github.com/bitfinexcom/bfx-facs-grc-s3",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bitfinexcom/bfx-facs-auth-google.git"
+    "url": "git+https://github.com/bitfinexcom/bfx-facs-grc-s3.git"
   },
   "license": "Apache-2.0",
   "author": {
