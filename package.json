@@ -1,6 +1,6 @@
 {
   "name": "@bitfinex/bfx-facs-grc-s3",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "private": false,
   "description": "Bitfinex Grenache s3 Facility",
   "keywords": [
